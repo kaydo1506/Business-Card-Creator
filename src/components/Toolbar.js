@@ -1,44 +1,37 @@
 import React from 'react';
 
-const Toolbar = ({ onAddText, onCycleColor, onResetColor }) => {
+const Toolbar = ({ onAddText, onEmphasis }) => {
   return (
-    <div>
-      <h2 className='text-3xl'>Toolbar</h2>
-      <div className='toolbar bg-gray-200 p-4'>
+    <div className='my-4'>
+      <h2 className='text-3xl mb-4 font-bold text-gray-700'>Toolbar</h2>
+      <div className='flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md'>
         <button
           onClick={() => onAddText('h1')}
-          className='m-2 bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded w-32'
+          className='bg-zinc-500 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
         >
           H1
         </button>
         <button
           onClick={() => onAddText('h2')}
-          className='m-2 bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded w-32'
+          className='bg-zinc-500 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
         >
           H2
         </button>
         <button
           onClick={() => onAddText('p')}
-          className='m-2 bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded w-32'
+          className='bg-zinc-500 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
         >
           Paragraph
         </button>
         <button
-          onClick={onCycleColor}
-          className='m-2 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded w-32'
+          onClick={onEmphasis}
+          className='bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
         >
-          Select Color
+          <em>Italics</em>
         </button>
-        <button
-          onClick={onResetColor}
-          className='m-2 bg-slate-950 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded w-32'
-        >
-          Reset Color
-        </button>
-        {/* More tools can be added here */}
       </div>
     </div>
   );
 };
 
-export default Toolbar;
+export default React.memo(Toolbar);

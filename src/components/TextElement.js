@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-const TextElement = ({ id, text, type, color, onUpdate, onDragStart }) => {
+const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
+  const { id, text, type, emphasis } = textObj;
   const [isEditing, setIsEditing] = useState(false);
   const [editableText, setEditableText] = useState(text);
 
@@ -13,18 +14,23 @@ const TextElement = ({ id, text, type, color, onUpdate, onDragStart }) => {
   };
 
   const handleBlur = () => {
+    console.log(editableText)
     setIsEditing(false);
-    onUpdate(id, editableText);
+    if (!editableText) {
+      // Remove element if text is empty
+      onRemoveElement(id);
+    } else {
+      // Update text as usual
+      onUpdate(id, editableText);
+    }
   };
 
-  const textStyle = `text-${color}-700`; 
   const inputStyle =
     'border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500';
 
   const renderElement = () => {
     const commonProps = {
       onDoubleClick: handleDoubleClick,
-      className: textStyle,
     };
 
     if (isEditing) {
@@ -42,24 +48,32 @@ const TextElement = ({ id, text, type, color, onUpdate, onDragStart }) => {
       switch (type) {
         case 'h1':
           return (
-            <h1 {...commonProps} className={`${textStyle} text-3xl font-bold`}>
-              {editableText || `New ${type}`}
+            <h1
+              {...commonProps}
+              className={`text-3xl font-bold ${emphasis ? 'italic' : ''}`}
+            >
+              {editableText}
             </h1>
           );
         case 'h2':
           return (
             <h2
               {...commonProps}
-              className={`${textStyle} text-2xl font-semibold`}
+              className={`text-2xl font-semibold ${
+                emphasis ? 'italic' : ''
+              }`}
             >
-              {editableText || `New ${type}`}
+              {editableText}
             </h2>
           );
         case 'p':
         default:
           return (
-            <p {...commonProps} className={`${textStyle} text-base`}>
-              {editableText || `New ${type}`}
+            <p
+              {...commonProps}
+              className={`text-base ${emphasis ? 'italic' : ''}`}
+            >
+              {editableText}
             </p>
           );
       }
@@ -67,11 +81,7 @@ const TextElement = ({ id, text, type, color, onUpdate, onDragStart }) => {
   };
 
   return (
-    <div
-      className='text-element p-2'
-      draggable
-      onDragStart={(e) => onDragStart(e, id)}
-    >
+    <div className='p-2 cursor-pointer' draggable onDragStart={(e) => onDragStart(e, id)}>
       {renderElement()}
     </div>
   );
