@@ -1,4 +1,5 @@
 import React from 'react';
+import html2canvas from 'html2canvas';
 import { PhotoIcon, Delete } from '../Icons/Icons';
 
 const CardTemplate = ({
@@ -12,6 +13,21 @@ const CardTemplate = ({
     e.stopPropagation();
     e.preventDefault();
   };
+  const downloadCardAsImage = async () => {
+    const cardElement = document.getElementById('card-template'); // Ensure your card template has this ID
+    const canvas = await html2canvas(cardElement);
+    const image = canvas.toDataURL('image/png', 1.0);
+
+    // Create a link to download the image
+    let downloadLink = document.createElement('a');
+    downloadLink.href = image;
+    downloadLink.download = 'business-card.png';
+
+    // Append link to the body and trigger the download
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
   const imageElement = elements.find((element) => element.type === 'image');
   return (
     <div className='mt-12 mb-8 md:mb-0'>
@@ -21,7 +37,10 @@ const CardTemplate = ({
           <Delete />
         </span>
       </div>
-      <div className='bg-white border border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto'>
+      <div
+        className='bg-white border border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto'
+        id='card-template'
+      >
         {/*TITLE COMTAINER---------------------------------------------------------------------------------------- */}
         <div
           onDragOver={handleDragOver}
@@ -110,6 +129,18 @@ const CardTemplate = ({
           </div>
         </div>
       </div>
+      <button
+        onClick={downloadCardAsImage}
+        className={`mt-4 px-4 py-2 text-white font-semibold rounded float-right
+                    ${
+                      elements.length > 0
+                        ? 'bg-blue-500 hover:bg-blue-600'
+                        : 'bg-gray-400 cursor-not-allowed'
+                    }`}
+        disabled={elements.length === 0}
+      >
+        Download Card
+      </button>
     </div>
   );
 };

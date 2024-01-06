@@ -40,7 +40,7 @@ const Toolbar = ({ onAddText, onEmphasis, onImageUpload }) => {
         </label>
         <button
           onClick={onEmphasis}
-          className='bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
+          className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
         >
           <em>Italics</em>
         </button>
