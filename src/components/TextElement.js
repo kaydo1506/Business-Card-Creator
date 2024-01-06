@@ -16,7 +16,7 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
   const handleBlur = () => {
     setIsEditing(false);
     if (!editableText) {
-      // Remove element if text is empty
+      // Remove element if the text is empty
       onRemoveElement(id);
     } else {
       // Update text as usual

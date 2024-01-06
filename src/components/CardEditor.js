@@ -31,7 +31,7 @@ const CardEditor = () => {
   const handleEmphasis = () => {
     const updatedTexts = texts.map((text) => ({
       ...text,
-      emphasis: !text.emphasis, // Toggle the emphasis property
+      emphasis: !text.emphasis, // Toggle the emphasis property for all!
     }));
     setTexts(updatedTexts);
   };
@@ -138,7 +138,7 @@ const CardEditor = () => {
   console.log(cardElements);
 
   return (
-    <div className='flex flex-col md:flex-row justify-around h-screen'>
+    <div className='flex flex-col md:flex-row justify-around'>
       <div className='w-full md:w-2/5 flex flex-col'>
         <Toolbar
           onAddText={addText}
