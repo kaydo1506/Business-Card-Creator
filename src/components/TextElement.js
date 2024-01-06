@@ -14,7 +14,6 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
   };
 
   const handleBlur = () => {
-    console.log(editableText)
     setIsEditing(false);
     if (!editableText) {
       // Remove element if text is empty
@@ -50,7 +49,7 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
           return (
             <h1
               {...commonProps}
-              className={`text-3xl font-bold ${emphasis ? 'italic' : ''}`}
+              className={`text-2xl font-bold ${emphasis ? 'italic' : ''}`}
             >
               {editableText}
             </h1>
@@ -59,7 +58,7 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
           return (
             <h2
               {...commonProps}
-              className={`text-2xl font-semibold ${
+              className={`text-xl font-semibold ${
                 emphasis ? 'italic' : ''
               }`}
             >

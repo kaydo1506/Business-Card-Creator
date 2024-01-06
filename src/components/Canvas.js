@@ -1,10 +1,11 @@
 import React from 'react';
 import TextElement from './TextElement';
+import ImageElement from './ImageElement';
 
-const Canvas = ({ texts, onUpdateText, onDragStart, onRemoveElement }) => {
+const Canvas = ({ texts, images, onUpdateText, onDragStart, onRemoveElement }) => {
   return (
     <div className='mt-12'>
-      <h1 className='text-3xl font-semibold text-gray-700 mb-4'>Canvas</h1>
+      <h1 className='text-2xl font-semibold text-gray-700 mb-4'>Canvas</h1>
       <div className='bg-white border-4 shadow-inner border-gray-200 rounded-lg p-6'>
         {texts.length === 0 ? (
           <div className='text-gray-500 text-center'>
@@ -22,8 +23,26 @@ const Canvas = ({ texts, onUpdateText, onDragStart, onRemoveElement }) => {
           ))
         )}
       </div>
+      {/*---------------------------------------------------------------------------------*/}
+      {images.length > 0 ? (
+        <div className='flex overflow-x-auto mb-4 space-x-4 bg-gray-100 p-2 rounded'>
+          {images.map((imageObj) => (
+            <div
+              key={imageObj.id}
+              className='flex-shrink-0 border border-gray-300 shadow rounded p-1'
+              style={{ minWidth: '100px' }}
+            >
+              <ImageElement imageObj={imageObj} onDragStart={onDragStart} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <span className='flex justify-center items-center bg-gray-100 p-4 rounded text-gray-500'>
+          No images uploaded. Upload images from the Toolbar.
+        </span>
+      )}
     </div>
   );
-};
+}; 
 
 export default React.memo(Canvas);

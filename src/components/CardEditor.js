@@ -7,6 +7,7 @@ import CardTemplate from './CardTemplate';
 const CardEditor = () => {
   const [texts, setTexts] = useState([]);
   const [cardElements, setCardElements] = useState([]);
+  const [images, setImages] = useState([]);
 
   const addText = (type) => {
     const newText = {
@@ -33,7 +34,6 @@ const CardEditor = () => {
       emphasis: !text.emphasis, // Toggle the emphasis property
     }));
     setTexts(updatedTexts);
-    console.log('clicked:', texts);
   };
 
   const handleDragStart = (e, id) => {
@@ -98,24 +98,69 @@ const CardEditor = () => {
   const handleResetCardTemplate = () => {
     setCardElements([]);
   };
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const src = URL.createObjectURL(file);
+      const newImage = {
+        id: uuidv4(),
+        src: src,
+      };
+      setImages([...images, newImage]);
+    }
+  };
+  const handleDropOnImageArea = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const elementId = e.dataTransfer.getData('text/plain');
+    const elementToAdd = images.find(
+      (image) => image.id.toString() === elementId
+    );
+
+    if (elementToAdd) {
+      // this is to remove any existing image from cardElements just to because only one image can exist on the businesscard at a time
+      const elementsWithoutImages = cardElements.filter(
+        (element) => element.type !== 'image'
+      );
+
+      // then add the new image
+      setCardElements([
+        ...elementsWithoutImages,
+        { ...elementToAdd, type: 'image' },
+      ]);
+    } else {
+      alert('Please drop only images here.');
+    }
+  };
+
+  console.log(images);
+  console.log(cardElements);
 
   return (
     <div className='flex flex-col md:flex-row justify-around h-screen'>
       <div className='w-full md:w-2/5 flex flex-col'>
-        <Toolbar onAddText={addText} onEmphasis={handleEmphasis} />
+        <Toolbar
+          onAddText={addText}
+          onEmphasis={handleEmphasis}
+          onImageUpload={handleImageUpload}
+        />
+
         <Canvas
           texts={texts}
           onUpdateText={updateText}
           onDragStart={handleDragStart}
           onRemoveElement={handleRemoveElementFromCanvas}
+          images={images}
         />
       </div>
       <div className='w-full md:w-2/5'>
         <CardTemplate
-          handleDropOnTitle={handleDropOnTitle}
-          handleDropOnBody={handleDropOnBody}
+          onTitleDrop={handleDropOnTitle}
+          onBodyDrop={handleDropOnBody}
           elements={cardElements}
           onCardTemplateReset={handleResetCardTemplate}
+          onImageDrop={handleDropOnImageArea}
         />
       </div>
     </div>
