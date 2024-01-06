@@ -5,7 +5,7 @@ import ImageElement from './ImageElement';
 const Canvas = ({ texts, images, onUpdateText, onDragStart, onRemoveElement }) => {
   return (
     <div className='mt-12'>
-      <h1 className='text-2xl font-semibold text-gray-700 mb-4'>Canvas</h1>
+      <h1 className='text-xl font-semibold text-gray-700 mb-4'>Canvas</h1>
       <div className='bg-white border-4 shadow-inner border-gray-200 rounded-lg p-6'>
         {texts.length === 0 ? (
           <div className='text-gray-500 text-center'>

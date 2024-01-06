@@ -16,7 +16,7 @@ const CardTemplate = ({
   return (
     <div className='mt-12'>
       <div className='flex justify-between items-center mb-4'>
-        <h2 className='text-2xl font-semibold text-gray-700'>Card Template</h2>
+        <h2 className='text-xl font-semibold text-gray-700'>Business Card</h2>
         <span onClick={onCardTemplateReset} className='cursor-pointer '>
           <Delete />
         </span>

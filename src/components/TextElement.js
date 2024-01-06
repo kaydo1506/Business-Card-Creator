@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
+import { Edit } from '../Icons/Icons';
 
 const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
   const { id, text, type, emphasis } = textObj;
   const [isEditing, setIsEditing] = useState(false);
   const [editableText, setEditableText] = useState(text);
-
-  const handleDoubleClick = () => {
-    setIsEditing(true);
-  };
 
   const handleChange = (e) => {
     setEditableText(e.target.value);
@@ -28,10 +25,6 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
     'border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500';
 
   const renderElement = () => {
-    const commonProps = {
-      onDoubleClick: handleDoubleClick,
-    };
-
     if (isEditing) {
       return (
         <input
@@ -47,40 +40,59 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
       switch (type) {
         case 'h1':
           return (
-            <h1
-              {...commonProps}
-              className={`text-2xl font-bold ${emphasis ? 'italic' : ''}`}
-            >
-              {editableText}
-            </h1>
+            <div className='flex items-center justify-between'>
+              <h1 className={`text-2xl font-bold ${emphasis ? 'italic' : ''}`}>
+                {editableText}
+              </h1>
+              <span
+                className='cursor-pointer'
+                onClick={() => setIsEditing(true)}
+              >
+                <Edit />
+              </span>
+            </div>
           );
         case 'h2':
           return (
-            <h2
-              {...commonProps}
-              className={`text-xl font-semibold ${
-                emphasis ? 'italic' : ''
-              }`}
-            >
-              {editableText}
-            </h2>
+            <div className='flex items-center space-x-2 justify-between'>
+              <h2
+                className={`text-xl font-semibold ${emphasis ? 'italic' : ''}`}
+              >
+                {editableText}
+              </h2>
+              <span
+                className='cursor-pointer'
+                onClick={() => setIsEditing(true)}
+              >
+                <Edit />
+              </span>
+            </div>
           );
         case 'p':
         default:
           return (
-            <p
-              {...commonProps}
-              className={`text-base ${emphasis ? 'italic' : ''}`}
-            >
-              {editableText}
-            </p>
+            <div className='flex items-center space-x-2 justify-between'>
+              <p className={`text-base ${emphasis ? 'italic' : ''}`}>
+                {editableText}
+              </p>
+              <span
+                className='cursor-pointer'
+                onClick={() => setIsEditing(true)}
+              >
+                <Edit />
+              </span>
+            </div>
           );
       }
     }
   };
 
   return (
-    <div className='p-2 cursor-pointer' draggable onDragStart={(e) => onDragStart(e, id)}>
+    <div
+      className='p-2 cursor-pointer'
+      draggable
+      onDragStart={(e) => onDragStart(e, id)}
+    >
       {renderElement()}
     </div>
   );
