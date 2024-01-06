@@ -14,14 +14,14 @@ const CardTemplate = ({
   };
   const imageElement = elements.find((element) => element.type === 'image');
   return (
-    <div className='mt-12'>
-      <div className='flex justify-between items-center mb-4'>
+    <div className='mt-12 mb-8 md:mb-0'>
+      <div className='flex justify-between items-center mb-4 '>
         <h2 className='text-xl font-semibold text-gray-700'>Business Card</h2>
         <span onClick={onCardTemplateReset} className='cursor-pointer '>
           <Delete />
         </span>
       </div>
-      <div className='bg-white border border-gray-200 shadow-2xl rounded-lg p-6'>
+      <div className='bg-white border border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto'>
         {/*TITLE COMTAINER---------------------------------------------------------------------------------------- */}
         <div
           onDragOver={handleDragOver}
@@ -50,7 +50,7 @@ const CardTemplate = ({
                 )
             )
           ) : (
-            <span className='text-gray-400'>Title goes here...</span>
+            <span className='text-gray-400 text-sm'>Title goes here...</span>
           )}
         </div>
 
@@ -58,7 +58,7 @@ const CardTemplate = ({
           {/*IMAGE COMTAINER---------------------------------------------------------------------------------------- */}
           <div className='flex justify-center items-center w-1/4 '>
             <div
-              className='border-gray-200 border bg-rose-100  rounded-md flex items-center justify-center'
+              className='border-gray-200 border bg-orange-100  rounded-md flex items-center justify-center'
               onDrop={onImageDrop}
               onDragOver={handleDragOver}
               style={{ position: 'relative', overflow: 'hidden' }}
@@ -103,7 +103,7 @@ const CardTemplate = ({
                   )
               )
             ) : (
-              <span className='text-gray-400'>
+              <span className='text-gray-400 text-sm'>
                 Paragraph content goes here...
               </span>
             )}
