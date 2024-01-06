@@ -4,7 +4,7 @@ import { Upload } from '../Icons/Icons';
 const Toolbar = ({ onAddText, onEmphasis, onImageUpload }) => {
   return (
     <div className='my-4'>
-      <h2 className='text-2xl mb-4 font-bold text-gray-700'>Toolbar</h2>
+      <h2 className='text-2xl mb-4 font-semibold text-gray-700'>Toolbar</h2>
       <div className='flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md'>
         <button
           onClick={() => onAddText('h1')}
