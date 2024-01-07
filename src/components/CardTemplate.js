@@ -110,7 +110,7 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
             </Draggable>
           );
         })}
-        
+
       </div>
       <button
         onClick={downloadCardAsImage}

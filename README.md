@@ -38,5 +38,4 @@ Access the app here --> https://business-card-creator.vercel.app/
 
 ## Mobile Interaction Notes
 
-- **Resizing on Mobile**: Currently, resizing elements only works on devices with a pointer and does not work with touch input. For the best experience, I recommend using a desktop.
-- **Element Selection**: On mobile devices, tap an element to select it. This will show options for deleting the element.
+- **Resizing on Mobile**: Currently, resizing elements on mobile will require you to resize from the edges and it's a bit tricky. For the best experience, I recommend using a desktop.
