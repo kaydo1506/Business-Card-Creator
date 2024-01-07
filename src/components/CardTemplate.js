@@ -5,7 +5,7 @@ import { Resizable } from 're-resizable';
 import Draggable from 'react-draggable';
 
 const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
-  const [hoveredElement, setHoveredElement] = useState(null);
+  const [selectedElement, setSelectedElement] = useState(null);
 
   const handleDragOver = (e) => {
     e.stopPropagation();
@@ -29,6 +29,12 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
   const handleElementDelete = (elementId) => {
     onRemoveCardElement(elementId);
   };
+   const handleToggleDeleteButton = (elementId) => {
+     // Toggle the selected element
+     setSelectedElement((prevSelectedElement) =>
+       prevSelectedElement === elementId ? null : elementId
+     );
+   };
   return (
     <div className='mt-12 mb-8 md:mb-0 md:max-w-xl'>
       <div className='mb-4 '>
@@ -58,11 +64,15 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
             <Draggable key={element.id}>
               <Resizable>
                 <div
-                  onMouseEnter={() => setHoveredElement(element.id)}
-                  onMouseLeave={() => setHoveredElement(null)}
-                  className={`relative hover:border-amber-500 rounded-md hover:border-2 hover:shadow-lg `}
+                  onClick={() => handleToggleDeleteButton(element.id)} // Toggle delete button on tap
+                  className={`relative rounded-md ${
+                    selectedElement === element.id
+                      ? 'border-2 border-amber-500'
+                      : 'hover:border-2 hover:border-amber-500'
+                  }`}
                 >
-                  {hoveredElement === element.id && (
+
+                  {selectedElement === element.id && (
                     <button
                       onClick={() => handleElementDelete(element.id)}
                       className='absolute top-0 right-0 bg-white rounded-full '
@@ -79,6 +89,7 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
                       className='rounded-md'
                     />
                   )}
+
                   {element.type === 'h1' && (
                     <h1 style={textStyle} className='text-2xl'>
                       {element.content}
@@ -99,6 +110,7 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
             </Draggable>
           );
         })}
+        
       </div>
       <button
         onClick={downloadCardAsImage}

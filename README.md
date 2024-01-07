@@ -34,3 +34,9 @@ Access the app here --> https://business-card-creator.vercel.app/
 - **CardTemplate**: Displays a preview of the business card. Text and Image elements can be dropped here and also arranged.
 - **TextElement**: Shows thee text element to be edited.
 - **ImageElement**: Represents image elements to be dropped on the card. Multiple images can be uploaded and viewed in a slider.
+
+
+## Mobile Interaction Notes
+
+- **Resizing on Mobile**: Currently, resizing elements only works on devices with a pointer and does not work with touch input. For the best experience, I recommend using a desktop.
+- **Element Selection**: On mobile devices, tap an element to select it. This will show options for deleting the element.
