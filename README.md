@@ -16,7 +16,7 @@ npm start
 
 - **Start by adding text**: Use the Toolbar to add titles (H1, H2) and paragraph text to your card.
 - **Edit text**: Click on the edit icon on each text elements to edit them directly on the canvas. You can also toggle italicising your texts.
-- **Add images**: Upload images from the toolbar onto the Image are of the canvas, and drag them onto the card template.
+- **Add images**: Upload images from the toolbar onto the Image area of the canvas, and drag them onto the card template.
 - *Preview and download*: Preview your card dowmload your design.
 
 ## Contributing
