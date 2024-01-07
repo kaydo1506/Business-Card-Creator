@@ -30,7 +30,7 @@ Access the app here --> https://business-card-creator.vercel.app/
 - **App**: The main component that renders the Business Card Creator application.
 - **CardEditor**: Manages the card editing interface, including text and image manipulation.
 - **Toolbar**: Provides tools for adding and editing text elements and uploading images.
-- **Canvas**: A workspace where users can add, edit, and arrange text and image elements.
-- **CardTemplate**: Displays a preview of the business card as it's being created.
-- **TextElement**: Represents individual text elements that can be edited and rearranged.
-- **ImageElement**: Represents image element to be dropped on the card.
+- **Canvas**: A workspace where users can add and edit text and image elements.
+- **CardTemplate**: Displays a preview of the business card. Text and Image elements can be dropped here and also arranged.
+- **TextElement**: Shows thee text element to be edited.
+- **ImageElement**: Represents image elements to be dropped on the card. Multiple images can be uploaded and viewed in a slider.

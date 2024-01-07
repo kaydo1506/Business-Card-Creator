@@ -1,19 +1,31 @@
-import React from 'react';
+import { useState } from 'react';
+import { Delete } from '../Icons/Icons';
 
-const ImageElement = ({ imageObj, onDragStart }) => {
+const ImageElement = ({ imageObj, onDragStart, onDeleteImage }) => {
   const { id, src } = imageObj;
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      className='p-2 cursor-pointer'
+      className='p-2 cursor-pointer relative'
       draggable
       onDragStart={(e) => onDragStart(e, id)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <img
         src={src}
         alt='Business Card Element'
-        className='max-w-1/3 h-32 rounded-md'
+        className='w-32 h-40 rounded-md object-cover'
       />
+      {isHovered && (
+        <button
+          onClick={() => onDeleteImage(id)}
+          className='absolute top-0 right-0 bg-white rounded-full p-1'
+        >
+          <Delete />
+        </button>
+      )}
     </div>
   );
 };

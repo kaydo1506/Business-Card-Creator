@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Edit } from '../Icons/Icons';
 
-const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
-  const { id, text, type, emphasis } = textObj;
+const TextElement = ({ state, onUpdate, onDragStart }) => {
+  const { type, content, emphasis, bold } = state;
   const [isEditing, setIsEditing] = useState(false);
-  const [editableText, setEditableText] = useState(text);
+  const [editableText, setEditableText] = useState(content);
+  const [textEdited, setTextEdited] = useState(false); // State to track if text has been edited
 
   const handleChange = (e) => {
     setEditableText(e.target.value);
@@ -12,12 +13,10 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
 
   const handleBlur = () => {
     setIsEditing(false);
-    if (!editableText) {
-      // Remove element if the text is empty
-      onRemoveElement(id);
-    } else {
-      // Update text as usual
-      onUpdate(id, editableText);
+    const trimmedText = editableText.trim(); // Trim the text to remove extra spaces
+    if (trimmedText) {
+      onUpdate(type, trimmedText); // Update only if text is not empty
+      setTextEdited(true); // Mark as edited
     }
   };
 
@@ -29,6 +28,7 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
       return (
         <input
           type='text'
+          placeholder='Enter text...'
           value={editableText}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -37,61 +37,49 @@ const TextElement = ({ textObj, onUpdate, onDragStart, onRemoveElement }) => {
         />
       );
     } else {
-      switch (type) {
-        case 'h1':
-          return (
-            <div className='flex items-center justify-between'>
-              <h1 className={`text-2xl font-bold ${emphasis ? 'italic' : ''}`}>
-                {editableText}
-              </h1>
-              <span
-                className='cursor-pointer'
-                onClick={() => setIsEditing(true)}
-              >
-                <Edit />
-              </span>
-            </div>
-          );
-        case 'h2':
-          return (
-            <div className='flex items-center space-x-2 justify-between'>
-              <h2
-                className={`text-xl font-semibold ${emphasis ? 'italic' : ''}`}
-              >
-                {editableText}
-              </h2>
-              <span
-                className='cursor-pointer'
-                onClick={() => setIsEditing(true)}
-              >
-                <Edit />
-              </span>
-            </div>
-          );
-        case 'p':
-        default:
-          return (
-            <div className='flex items-center space-x-2 justify-between'>
-              <p className={`text-base ${emphasis ? 'italic' : ''}`}>
-                {editableText}
-              </p>
-              <span
-                className='cursor-pointer'
-                onClick={() => setIsEditing(true)}
-              >
-                <Edit />
-              </span>
-            </div>
-          );
-      }
+      const displayText = content || <span className='text-sm text-gray-400'>Click to edit</span>; // Default text if content is empty
+      return (
+        <div className='flex items-center space-x-2 justify-between'>
+          {type === 'h1' && (
+            <h1
+              className={`text-2xl ${emphasis ? 'italic' : ''} ${
+                bold ? 'font-bold' : ''
+              }`}
+            >
+              {displayText}
+            </h1>
+          )}
+          {type === 'h2' && (
+            <h2
+              className={`text-xl ${emphasis ? 'italic' : ''} ${
+                bold ? 'font-bold' : ''
+              }`}
+            >
+              {displayText}
+            </h2>
+          )}
+          {type === 'p' && (
+            <p
+              className={`text-base ${emphasis ? 'italic' : ''} ${
+                bold ? 'font-bold' : ''
+              }`}
+            >
+              {displayText}
+            </p>
+          )}
+          <span className='cursor-pointer' onClick={() => setIsEditing(true)}>
+            <Edit />
+          </span>
+        </div>
+      );
     }
   };
 
   return (
     <div
       className='p-2 cursor-pointer'
-      draggable
-      onDragStart={(e) => onDragStart(e, id)}
+      draggable={textEdited} // Make draggable only if text has been edited
+      onDragStart={(e) => textEdited && onDragStart(e, type)} // Handle drag start only if text has been edited
     >
       {renderElement()}
     </div>

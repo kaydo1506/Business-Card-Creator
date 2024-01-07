@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
-import { PhotoIcon, Delete } from '../Icons/Icons';
+import { Delete } from '../Icons/Icons';
+import { Resizable } from 're-resizable';
+import Draggable from 'react-draggable';
 
-const CardTemplate = ({
-  elements,
-  onTitleDrop,
-  onBodyDrop,
-  onImageDrop,
-  onCardTemplateReset,
-}) => {
+const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
+  const [hoveredElement, setHoveredElement] = useState(null);
+
   const handleDragOver = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -28,106 +26,79 @@ const CardTemplate = ({
     downloadLink.click();
     document.body.removeChild(downloadLink);
   };
-  const imageElement = elements.find((element) => element.type === 'image');
+  const handleElementDelete = (elementId) => {
+    onRemoveCardElement(elementId);
+  };
   return (
-    <div className='mt-12 mb-8 md:mb-0'>
-      <div className='flex justify-between items-center mb-4 '>
+    <div className='mt-12 mb-8 md:mb-0 md:max-w-xl'>
+      <div className='mb-4 '>
         <h2 className='text-xl font-semibold text-gray-700'>Business Card</h2>
-        <span onClick={onCardTemplateReset} className='cursor-pointer '>
-          <Delete />
-        </span>
       </div>
+
       <div
-        className='bg-white border border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto'
+        className='bg-white border border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto '
         id='card-template'
+        onDrop={onDrop}
+        onDragOver={handleDragOver}
       >
-        {/*TITLE COMTAINER---------------------------------------------------------------------------------------- */}
-        <div
-          onDragOver={handleDragOver}
-          onDrop={onTitleDrop}
-          className='border-gray-200 border p-4 rounded-md mb-4 flex justify-center items-center'
-          style={{ minHeight: '60px' }}
-        >
-          {elements.some(
-            (element) => element.type === 'h1' || element.type === 'h2'
-          ) ? (
-            elements.map(
-              (element, id) =>
-                (element.type === 'h1' || element.type === 'h2') && (
-                  <div
-                    key={id}
-                    className={`${
-                      element.emphasis ? 'italic' : ''
-                    } text-center ${
-                      element.type === 'h1'
-                        ? 'text-2xl font-bold'
-                        : 'text-xl font-semibold'
-                    }`}
-                  >
-                    {element.text}
-                  </div>
-                )
-            )
-          ) : (
-            <span className='text-gray-400 text-sm'>Title goes here...</span>
-          )}
-        </div>
-
-        <div className='flex'>
-          {/*IMAGE COMTAINER---------------------------------------------------------------------------------------- */}
-          <div className='flex justify-center items-center w-1/4 '>
-            <div
-              className='border-gray-200 border bg-orange-100  rounded-md flex items-center justify-center'
-              onDrop={onImageDrop}
-              onDragOver={handleDragOver}
-              style={{ position: 'relative', overflow: 'hidden' }}
-            >
-              {imageElement ? (
-                <img
-                  draggable='false'
-                  src={imageElement.src}
-                  alt='id'
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    resize: 'both',
-                    overflow: 'auto',
-                  }}
-                />
-              ) : (
-                <div className='p-8'>
-                  <PhotoIcon />
-                </div>
-              )}
-            </div>
+        {elements.length === 0 && (
+          <div className='flex items-center justify-center h-full'>
+            <p className='text-gray-400 text-center text-sm '>
+              Drag and drop elements here to create your business card.
+            </p>
           </div>
+        )}
+        {elements.map((element) => {
+          const textStyle = {
+            fontStyle: element.emphasis ? 'italic' : 'normal',
+            fontWeight: element.bold ? 'bold' : 'normal',
+          };
 
-          {/*BODY COMTAINER---------------------------------------------------------------------------------------- */}
-          <div
-            onDragOver={handleDragOver}
-            onDrop={onBodyDrop}
-            className='p-4 w-3/4 flex flex-col justify-start'
-            style={{ minHeight: '150px' }}
-          >
-            {elements.some((element) => element.type === 'p') ? (
-              elements.map(
-                (element, id) =>
-                  element.type === 'p' && (
-                    <div
-                      key={id}
-                      className={`${element.emphasis ? 'italic' : ''} mb-2`}
+          return (
+            <Draggable key={element.id}>
+              <Resizable>
+                <div
+                  onMouseEnter={() => setHoveredElement(element.id)}
+                  onMouseLeave={() => setHoveredElement(null)}
+                  className={`relative hover:border-amber-500 rounded-md hover:border-2 hover:shadow-lg `}
+                >
+                  {hoveredElement === element.id && (
+                    <button
+                      onClick={() => handleElementDelete(element.id)}
+                      className='absolute top-0 right-0 bg-white rounded-full '
                     >
-                      {element.text}
-                    </div>
-                  )
-              )
-            ) : (
-              <span className='text-gray-400 text-sm'>
-                Paragraph content goes here...
-              </span>
-            )}
-          </div>
-        </div>
+                      <Delete />
+                    </button>
+                  )}
+
+                  {element.type === 'image' && (
+                    <img
+                      draggable='false'
+                      src={element.content}
+                      alt='Element'
+                      className='rounded-md'
+                    />
+                  )}
+                  {element.type === 'h1' && (
+                    <h1 style={textStyle} className='text-2xl'>
+                      {element.content}
+                    </h1>
+                  )}
+                  {element.type === 'h2' && (
+                    <h2 style={textStyle} className='text-xl'>
+                      {element.content}
+                    </h2>
+                  )}
+                  {element.type === 'p' && (
+                    <p style={textStyle} className='text-base'>
+                      {element.content}
+                    </p>
+                  )}
+                </div>
+              </Resizable>
+            </Draggable>
+          );
+        })}
       </div>
       <button
         onClick={downloadCardAsImage}

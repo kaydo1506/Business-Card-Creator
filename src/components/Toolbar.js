@@ -1,29 +1,28 @@
 import React from 'react';
 import { Upload } from '../Icons/Icons';
 
-const Toolbar = ({ onAddText, onEmphasis, onImageUpload }) => {
+const ToolbarButton = ({ onClick, children, additionalClasses = '' }) => (
+  <button
+    onClick={onClick}
+    className={`bg-amber-700 hover:bg-amber-900 shadow-lg text-white text-xs font-semibold py-2 px-2 rounded transition duration-200 ease-in-out ${additionalClasses}`}
+  >
+    {children}
+  </button>
+);
+const Toolbar = ({ onStateUpdate, onEmphasis, onImageUpload, onBold }) => {
   return (
-    <div className='my-4'>
+    <div className='my-4 md:mr-8'>
       <h2 className='text-xl mb-4 font-semibold text-gray-700'>Toolbar</h2>
       <div className='flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md'>
-        <button
-          onClick={() => onAddText('h1')}
-          className='bg-zinc-500 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
-        >
+        <ToolbarButton onClick={() => onStateUpdate('h1', '')}>
           H1
-        </button>
-        <button
-          onClick={() => onAddText('h2')}
-          className='bg-zinc-500 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
-        >
+        </ToolbarButton>
+        <ToolbarButton onClick={() => onStateUpdate('h2', '')}>
           H2
-        </button>
-        <button
-          onClick={() => onAddText('p')}
-          className='bg-zinc-500 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
-        >
+        </ToolbarButton>
+        <ToolbarButton onClick={() => onStateUpdate('p', '')}>
           Paragraph
-        </button>
+        </ToolbarButton>
 
         <input
           type='file'
@@ -34,16 +33,16 @@ const Toolbar = ({ onAddText, onEmphasis, onImageUpload }) => {
         />
         <label
           htmlFor='image-upload'
-          className='bg-zinc-500 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out cursor-pointer'
+          className='bg-amber-700 hover:bg-amber-900 shadow-lg text-white font-semibold py-2 px-2 rounded transition duration-200 ease-in-out cursor-pointer'
         >
           <Upload />
         </label>
-        <button
-          onClick={onEmphasis}
-          className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out'
-        >
+        <ToolbarButton onClick={onEmphasis}>
           <em>Italics</em>
-        </button>
+        </ToolbarButton>
+        <ToolbarButton onClick={onBold}>
+          <strong>Bold</strong>
+        </ToolbarButton>
       </div>
     </div>
   );

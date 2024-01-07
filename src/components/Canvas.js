@@ -3,30 +3,28 @@ import TextElement from './TextElement';
 import ImageElement from './ImageElement';
 
 const Canvas = ({
-  texts,
+  state,
   images,
   onUpdateText,
   onDragStart,
-  onRemoveElement,
+  onDeleteImage
 }) => {
   return (
-    <div className='mt-12'>
-      <h1 className='text-xl font-semibold text-gray-700 mb-4'>Canvas</h1>
-      <div className='bg-white border-4 shadow-inner border-gray-200 rounded-lg p-6 h-[200px] overflow-y-auto'>
-        {texts.length === 0 ? (
+    <div className='mt-12 mr-8'>
+      <h1 className='text-xl font-semibold text-gray-700 mb-4'>Elements</h1>
+      <div className='bg-white border-4 shadow-inner border-gray-200 rounded-lg p-6'>
+        {state.length === 0 ? (
           <div className='text-gray-400 text-sm text-center'>
             Add and edit your card content here
           </div>
         ) : (
-          texts.map((textObj) => (
+          
             <TextElement
-              key={textObj.id}
-              textObj={textObj}
+              state={state}
               onUpdate={onUpdateText}
               onDragStart={onDragStart}
-              onRemoveElement={onRemoveElement}
             />
-          ))
+        
         )}
       </div>
       {/*---------------------------------------------------------------------------------*/}
@@ -38,7 +36,7 @@ const Canvas = ({
               className='flex-shrink-0 border border-gray-300 shadow rounded p-1'
               style={{ minWidth: '100px' }}
             >
-              <ImageElement imageObj={imageObj} onDragStart={onDragStart} />
+              <ImageElement imageObj={imageObj} onDragStart={onDragStart} onDeleteImage={onDeleteImage}/>
             </div>
           ))}
         </div>
