@@ -4,24 +4,21 @@ A web-based business card creator built with React and TailwindCSS.
 
 ## Setup
 
-To run this project, install it locally using npm:
-
-cd ../business-card-creator
-npm install
-npm start
+To run this project: clone -- npm install -- npm start
 
 ### Details on how to use the project.
 
 ### To use the Business Card Creator:
 
-- **Start by adding text**: Use the Toolbar to add titles (H1, H2) and paragraph text to your card.
-- **Edit text**: Click on the edit icon on each text elements to edit them directly on the canvas. You can also toggle italicising your texts.
-- **Add images**: Upload images from the toolbar onto the Image area of the canvas, and drag them onto the card template.
-- *Preview and download*: Preview your card dowmload your design.
+- **Add Text**: Use the Toolbar to add titles (H1, H2) and paragraph text to your card.
+- **Edit Text**: Easily edit text by clicking on the edit icon next to each text element on the canvas. Customize your text with options to italicize or bold the content.
+- **Add Images**: Upload images using the toolbar, which will appear in the Image area of the canvas. You can then drag and drop these images onto the card template. Multiple images can be added to your design.
+- **Drag and Drop Interface**: Freely move text and images around your card template to achieve your desired layout.
+- **Live Preview**: See your business card take shape in real-time as you add and edit elements.
+- **Download**: Once you're satisfied with your creation, download your business card as a PNG file, ready for printing or sharing :).
 
 ## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Make changes as you like, thanks.
 
 Access the app here --> https://business-card-creator.vercel.app/
 
