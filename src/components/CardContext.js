@@ -12,8 +12,12 @@ export const CardProvider = ({ children }) => {
     emphasis: false,
   });
   const [cardElements, setCardElements] = useState([]);
-  const [images, setImages] = useState([]);
-
+  const [images, setImages] = useState([
+    { id: '1', src: '/images/Rachael.png' },
+    { id: '2', src: '/images/3.webp' },
+    { id: '3', src: '/images/2.webp' },
+    { id: '4', src: '/images/1.jpg' },
+  ]);
   const addElement = (type, content = '') => {
     const newElement = {
       type: type,
