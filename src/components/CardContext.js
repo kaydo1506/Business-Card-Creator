@@ -53,6 +53,7 @@ export const CardProvider = ({ children }) => {
       };
       setCardElements((prevElements) => [...prevElements, newTextElement]);
     } else {
+      // Find the image based on droppedData ID
       const imageToAdd = images.find((image) => image.id === droppedData);
       if (imageToAdd) {
         const newImageElement = {
@@ -60,11 +61,8 @@ export const CardProvider = ({ children }) => {
           type: 'image',
           content: imageToAdd.src, // Use the image source URL
         };
-        // Replace any existing image
-        const elementsWithoutImage = cardElements.filter(
-          (el) => el.type !== 'image'
-        );
-        setCardElements([...elementsWithoutImage, newImageElement]);
+        // Add the new image element without removing existing images
+        setCardElements((prevElements) => [...prevElements, newImageElement]);
       }
     }
   };
@@ -114,11 +112,14 @@ export const CardProvider = ({ children }) => {
       reader.readAsDataURL(file);
     }
   };
+
+  // Remove Image from canvas/Elements
   const handleDeleteImage = (id) => {
     console.log('Delete');
     setImages(images.filter((image) => image.id !== id));
   };
 
+  // Remove element from card
   const removeCardElement = (elementId) => {
     setCardElements((prevElements) =>
       prevElements.filter((element) => element.id !== elementId)
