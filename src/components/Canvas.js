@@ -10,7 +10,7 @@ const Canvas = ({
   onDeleteImage
 }) => {
   return (
-    <div className='mt-12 mr-8'>
+    <div className='mt-12 md:mr-8'>
       <h1 className='text-xl font-semibold text-gray-700 mb-4'>Elements</h1>
       <div className='bg-white border-4 shadow-inner border-gray-200 rounded-lg p-6'>
         {state.length === 0 ? (
