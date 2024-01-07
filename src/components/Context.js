@@ -2,7 +2,7 @@
 import React, { createContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export const CardContext = createContext();
+export const Context = createContext();
 
 export const CardProvider = ({ children }) => {
   const [state, setState] = useState({
@@ -107,8 +107,8 @@ export const CardProvider = ({ children }) => {
           // Convert canvas to image URL and update state
           const resizedSrc = canvas.toDataURL('image/png', 0.9);
           setImages((prevImages) => [
-            ...prevImages,
             { id: uuidv4(), src: resizedSrc },
+            ...prevImages,
           ]);
         };
         img.src = e.target.result;
@@ -131,7 +131,7 @@ export const CardProvider = ({ children }) => {
   };
 
   return (
-    <CardContext.Provider
+    <Context.Provider
       value={{
         state,
         images,
@@ -148,6 +148,6 @@ export const CardProvider = ({ children }) => {
       }}
     >
       {children}
-    </CardContext.Provider>
+    </Context.Provider>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardProvider } from './components/CardContext';
+import { CardProvider } from './components/Context';
 import CardEditor from './components/CardEditor';
 
 function App() {

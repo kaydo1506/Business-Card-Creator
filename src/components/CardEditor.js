@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { CardContext } from './CardContext';
+import { Context } from './Context';
 import Toolbar from './Toolbar';
 import Canvas from './Canvas';
 import CardTemplate from './CardTemplate';
@@ -18,7 +18,7 @@ const CardEditor = () => {
     handleEmphasis,
     handleImageUpload,
     handleDeleteImage
-  } = useContext(CardContext);
+  } = useContext(Context);
 
   return (
     <div className='flex flex-col md:flex-row justify-around'>
