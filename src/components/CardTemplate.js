@@ -9,11 +9,10 @@ import { Resizable } from 're-resizable';
 const CardTemplate = () => {
   const { cardElements, handleDrop, removeCardElement } = useContext(Context);
   const [selectedElement, setSelectedElement] = useState(null);
-  const [currentBgColor, setCurrentBgColor] = useState('orange');
+  const [currentBgColor, setCurrentBgColor] = useState('rgb(228 228 231)');
   const colors = [
-    'rgb(252 211 77)',
     'rgb(22 78 99)',
-    'rgb(162 28 175)',
+    'rgb(20 83 45)',
     'rgb(2 6 23)',
     'rgb(107 114 128)',
     'rgb(249 250 251)',
@@ -69,7 +68,12 @@ const CardTemplate = () => {
 
       <div
         className='border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto'
-        style={{ backgroundColor: `${currentBgColor}` }}
+        style={{
+          backgroundColor: currentBgColor, // Dynamic background color
+          borderColor: '#fed7aa', // Tailwind's orange-200
+          borderWidth: '2px', // Default border width
+          borderStyle: 'solid', // Default border style
+        }}
         id='card-template'
         onDrop={handleDrop}
         onDragOver={handleDragOver}
