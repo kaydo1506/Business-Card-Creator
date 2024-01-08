@@ -61,7 +61,7 @@ const CardTemplate = () => {
     <div className='mt-12 mb-8 md:mb-0 md:max-w-xl'>
       <div className='mb-4 flex justify-between'>
         <h2 className='text-xl font-semibold text-gray-700'>Business Card</h2>
-        <button onClick={changeBgColor}>
+        <button onClick={changeBgColor} className='hover:scale-75'>
           <Color />
         </button>
       </div>

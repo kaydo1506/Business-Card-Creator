@@ -9,7 +9,7 @@ const Canvas = () => {
   return (
     <div className='mt-12 md:mr-8'>
       <h1 className='text-xl font-semibold text-gray-700 mb-4'>Elements</h1>
-      <div className='bg-white border-4 shadow-inner border-gray-200 rounded-lg p-6'>
+      <div className=' shadow-inner border rounded-lg p-2'>
         {state.length === 0 ? (
           <div className='text-gray-400 text-sm text-center'>
             Add and edit your card content here
@@ -20,7 +20,7 @@ const Canvas = () => {
       </div>
       {/*---------------------------------------------------------------------------------*/}
       {images.length > 0 ? (
-        <div className='flex overflow-x-auto mb-4 space-x-4 bg-gray-100 p-2 rounded '>
+        <div className='flex overflow-x-auto mb-4 space-x-4 border shadow-inner p-2 rounded '>
           {images.map((imageObj) => (
             <div
               key={imageObj.id}

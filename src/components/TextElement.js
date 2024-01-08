@@ -24,7 +24,7 @@ const TextElement = () => {
   }, [editableText, content, type, updateState]);
 
   const inputStyle =
-    'border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500';
+    'border border-gray-300 p-2 rounded focus:outline-none ';
 
   const renderElement = () => {
     if (isEditing) {
@@ -82,7 +82,7 @@ const TextElement = () => {
 
   return (
     <div
-      className='p-2 cursor-pointer'
+      className='p-2'
       draggable={textEdited} // Make draggable only if text has been edited
       onDragStart={(e) => textEdited && handleDragStart(e, type)} // Handle drag start only if text has been edited
     >
