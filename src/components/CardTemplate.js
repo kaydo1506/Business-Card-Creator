@@ -1,13 +1,33 @@
 import React, { useState, useContext } from 'react';
-import { Context } from './Context';
+import Draggable from 'react-draggable';
 import html2canvas from 'html2canvas';
+import { Color } from '../Icons/Icons';
+import { Context } from './Context';
 import { Delete } from '../Icons/Icons';
 import { Resizable } from 're-resizable';
-import Draggable from 'react-draggable';
 
 const CardTemplate = () => {
   const { cardElements, handleDrop, removeCardElement } = useContext(Context);
   const [selectedElement, setSelectedElement] = useState(null);
+  const [currentBgColor, setCurrentBgColor] = useState('orange');
+  const colors = [
+    'rgb(252 211 77)',
+    'rgb(22 78 99)',
+    'rgb(162 28 175)',
+    'rgb(2 6 23)',
+    'rgb(107 114 128)',
+    'rgb(249 250 251)',
+    'rgb(120 53 15)',
+    'rgb(37 99 235)',
+  ];
+
+  const changeBgColor = () => {
+    setCurrentBgColor((prevColor) => {
+      const currentIndex = colors.indexOf(prevColor);
+      const nextIndex = (currentIndex + 1) % colors.length;
+      return colors[nextIndex];
+    });
+  };
 
   const handleDragOver = (e) => {
     e.stopPropagation();
@@ -40,12 +60,16 @@ const CardTemplate = () => {
   };
   return (
     <div className='mt-12 mb-8 md:mb-0 md:max-w-xl'>
-      <div className='mb-4 '>
+      <div className='mb-4 flex justify-between'>
         <h2 className='text-xl font-semibold text-gray-700'>Business Card</h2>
+        <button onClick={changeBgColor}>
+          <Color />
+        </button>
       </div>
 
       <div
-        className='bg-white border border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto '
+        className='border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto'
+        style={{ backgroundColor: `${currentBgColor}` }}
         id='card-template'
         onDrop={handleDrop}
         onDragOver={handleDragOver}
