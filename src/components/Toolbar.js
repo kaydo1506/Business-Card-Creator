@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Upload } from '../Icons/Icons';
+import { Context } from './Context';
 
 const ToolbarButton = ({ onClick, children, additionalClasses = '' }) => (
   <button
@@ -9,18 +10,19 @@ const ToolbarButton = ({ onClick, children, additionalClasses = '' }) => (
     {children}
   </button>
 );
-const Toolbar = ({ onStateUpdate, onEmphasis, onImageUpload, onBold }) => {
+const Toolbar = () => {
+  const {handleEmphasis, handleImageUpload, handleBold, updateState} = useContext(Context)
   return (
     <div className='my-4 md:mr-8'>
       <h2 className='text-xl mb-4 font-semibold text-gray-700'>Toolbar</h2>
       <div className='flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md'>
-        <ToolbarButton onClick={() => onStateUpdate('h1', '')}>
+        <ToolbarButton onClick={() => updateState('h1', '')}>
           H1
         </ToolbarButton>
-        <ToolbarButton onClick={() => onStateUpdate('h2', '')}>
+        <ToolbarButton onClick={() => updateState('h2', '')}>
           H2
         </ToolbarButton>
-        <ToolbarButton onClick={() => onStateUpdate('p', '')}>
+        <ToolbarButton onClick={() => updateState('p', '')}>
           Paragraph
         </ToolbarButton>
 
@@ -29,7 +31,7 @@ const Toolbar = ({ onStateUpdate, onEmphasis, onImageUpload, onBold }) => {
           accept='image/*'
           id='image-upload'
           style={{ display: 'none' }}
-          onChange={onImageUpload}
+          onChange={handleImageUpload}
         />
         <label
           htmlFor='image-upload'
@@ -37,10 +39,10 @@ const Toolbar = ({ onStateUpdate, onEmphasis, onImageUpload, onBold }) => {
         >
           <Upload />
         </label>
-        <ToolbarButton onClick={onEmphasis}>
+        <ToolbarButton onClick={handleEmphasis}>
           <em>Italics</em>
         </ToolbarButton>
-        <ToolbarButton onClick={onBold}>
+        <ToolbarButton onClick={handleBold}>
           <strong>Bold</strong>
         </ToolbarButton>
       </div>

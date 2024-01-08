@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
+import { Context } from './Context';
 import { Edit } from '../Icons/Icons';
 
-const TextElement = ({ state, onUpdate, onDragStart }) => {
+const TextElement = () => {
+  const { state, updateState, handleDragStart } = useContext(Context);
+
   const { type, content, emphasis, bold } = state;
   const [isEditing, setIsEditing] = useState(false);
   const [editableText, setEditableText] = useState(content);
   const [textEdited, setTextEdited] = useState(false); // State to track if text has been edited
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     setEditableText(e.target.value);
-  };
+  }, []);
 
-  const handleBlur = () => {
+  const handleBlur = useCallback(() => {
     setIsEditing(false);
     const trimmedText = editableText.trim(); // Trim the text to remove extra spaces
-    if (trimmedText) {
-      onUpdate(type, trimmedText); // Update only if text is not empty
+    if (trimmedText && trimmedText !== content) {
+      updateState(type, trimmedText);
       setTextEdited(true); // Mark as edited
     }
-  };
+  }, [editableText, content, type, updateState]);
 
   const inputStyle =
     'border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500';
@@ -37,7 +40,9 @@ const TextElement = ({ state, onUpdate, onDragStart }) => {
         />
       );
     } else {
-      const displayText = content || <span className='text-sm text-gray-400'>Click to edit</span>; // Default text if content is empty
+      const displayText = content || (
+        <span className='text-sm text-gray-400'>Click to edit</span>
+      ); // Default text if content is empty
       return (
         <div className='flex items-center space-x-2 justify-between'>
           {type === 'h1' && (
@@ -79,7 +84,7 @@ const TextElement = ({ state, onUpdate, onDragStart }) => {
     <div
       className='p-2 cursor-pointer'
       draggable={textEdited} // Make draggable only if text has been edited
-      onDragStart={(e) => textEdited && onDragStart(e, type)} // Handle drag start only if text has been edited
+      onDragStart={(e) => textEdited && handleDragStart(e, type)} // Handle drag start only if text has been edited
     >
       {renderElement()}
     </div>

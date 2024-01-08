@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Context } from './Context';
 import html2canvas from 'html2canvas';
 import { Delete } from '../Icons/Icons';
 import { Resizable } from 're-resizable';
 import Draggable from 'react-draggable';
 
-const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
+const CardTemplate = () => {
+  const { cardElements, handleDrop, removeCardElement } = useContext(Context);
   const [selectedElement, setSelectedElement] = useState(null);
 
   const handleDragOver = (e) => {
@@ -12,7 +14,7 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
     e.preventDefault();
   };
   const downloadCardAsImage = async () => {
-    const cardElement = document.getElementById('card-template'); // Ensure your card template has this ID
+    const cardElement = document.getElementById('card-template');
     const canvas = await html2canvas(cardElement);
     const image = canvas.toDataURL('image/png', 1.0);
 
@@ -27,14 +29,15 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
     document.body.removeChild(downloadLink);
   };
   const handleElementDelete = (elementId) => {
-    onRemoveCardElement(elementId);
+    removeCardElement(elementId);
   };
-   const handleToggleDeleteButton = (elementId) => {
-     // Toggle the selected element
-     setSelectedElement((prevSelectedElement) =>
-       prevSelectedElement === elementId ? null : elementId
-     );
-   };
+
+  const handleToggleDeleteButton = (elementId) => {
+    // Toggle the selected element
+    setSelectedElement((prevSelectedElement) =>
+      prevSelectedElement === elementId ? null : elementId
+    );
+  };
   return (
     <div className='mt-12 mb-8 md:mb-0 md:max-w-xl'>
       <div className='mb-4 '>
@@ -44,17 +47,17 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
       <div
         className='bg-white border border-orange-200 shadow-2xl rounded-lg p-6 h-[280px] overflow-y-auto '
         id='card-template'
-        onDrop={onDrop}
+        onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        {elements.length === 0 && (
+        {cardElements.length === 0 && (
           <div className='flex items-center justify-center h-full'>
             <p className='text-gray-400 text-center text-sm '>
-              Drag and drop elements here to create your business card.
+              Drag and drop cardElements here to create your business card.
             </p>
           </div>
         )}
-        {elements.map((element) => {
+        {cardElements.map((element) => {
           const textStyle = {
             fontStyle: element.emphasis ? 'italic' : 'normal',
             fontWeight: element.bold ? 'bold' : 'normal',
@@ -71,7 +74,6 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
                       : 'hover:border-2 hover:border-amber-500'
                   }`}
                 >
-
                   {selectedElement === element.id && (
                     <button
                       onClick={() => handleElementDelete(element.id)}
@@ -110,17 +112,16 @@ const CardTemplate = ({ elements, onDrop, onRemoveCardElement }) => {
             </Draggable>
           );
         })}
-
       </div>
       <button
         onClick={downloadCardAsImage}
         className={`mt-4 px-4 py-2 text-white font-semibold rounded float-right
                     ${
-                      elements.length > 0
+                      cardElements.length > 0
                         ? 'bg-blue-500 hover:bg-blue-600'
                         : 'bg-gray-400 cursor-not-allowed'
                     }`}
-        disabled={elements.length === 0}
+        disabled={cardElements.length === 0}
       >
         Download Card
       </button>

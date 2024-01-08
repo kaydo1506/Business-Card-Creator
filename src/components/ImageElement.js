@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Context } from './Context';
 import { Delete } from '../Icons/Icons';
 
-const ImageElement = ({ imageObj, onDragStart, onDeleteImage }) => {
+const ImageElement = ({ imageObj }) => {
+  const { handleDragStart, handleDeleteImage } = useContext(Context);
+
   const { id, src } = imageObj;
   const [isHovered, setIsHovered] = useState(false);
 
@@ -9,7 +12,7 @@ const ImageElement = ({ imageObj, onDragStart, onDeleteImage }) => {
     <div
       className='p-2 cursor-pointer relative'
       draggable
-      onDragStart={(e) => onDragStart(e, id)}
+      onDragStart={(e) => handleDragStart(e, id)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -20,7 +23,7 @@ const ImageElement = ({ imageObj, onDragStart, onDeleteImage }) => {
       />
       {isHovered && (
         <button
-          onClick={() => onDeleteImage(id)}
+          onClick={() => handleDeleteImage(id)}
           className='absolute top-0 right-0 bg-white rounded-full p-1'
         >
           <Delete />

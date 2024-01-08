@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import TextElement from './TextElement';
 import ImageElement from './ImageElement';
+import { Context } from './Context';
 
-const Canvas = ({
-  state,
-  images,
-  onUpdateText,
-  onDragStart,
-  onDeleteImage
-}) => {
+const Canvas = () => {
+  const { state, images} =
+    useContext(Context);
   return (
     <div className='mt-12 md:mr-8'>
       <h1 className='text-xl font-semibold text-gray-700 mb-4'>Elements</h1>
@@ -18,13 +15,7 @@ const Canvas = ({
             Add and edit your card content here
           </div>
         ) : (
-          
-            <TextElement
-              state={state}
-              onUpdate={onUpdateText}
-              onDragStart={onDragStart}
-            />
-        
+          <TextElement />
         )}
       </div>
       {/*---------------------------------------------------------------------------------*/}
@@ -36,7 +27,7 @@ const Canvas = ({
               className='flex-shrink-0 border border-gray-300 shadow rounded p-1'
               style={{ minWidth: '100px' }}
             >
-              <ImageElement imageObj={imageObj} onDragStart={onDragStart} onDeleteImage={onDeleteImage}/>
+              <ImageElement imageObj={imageObj} />
             </div>
           ))}
         </div>
